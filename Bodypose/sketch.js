@@ -8,6 +8,13 @@ function preload() {
   // Load the bodyPose model
   bodyPose = ml5.bodyPose();
 }
+
+
+function mousePressed() {
+  console.log(poses);
+}
+
+
 function setup() {
   createCanvas(640, 480);
   // Create the video and hide it
@@ -19,16 +26,34 @@ function setup() {
   // Get the skeleton connection information
   connections = bodyPose.getSkeleton();
 }
+
+
+
 // Callback function for when the model returns pose data
 function gotPoses(results) {
   // Store the model's results in a global variable
   poses = results;
 }
+
+
+
 function draw() {
+  fill (240, 128, 128);
+  rect (width/2, 0, width/2, height/2);
+
+  fill(128, 128, 0);
+  rect(0, 0, width/2, height/2);
+
+  //fill (0, 128, 128);
+  //rect (0, 0, width, height);
+
+
   // Display the video
-  image(video, 0, 0, width, height);
+  //image(video, 0, 0, width, height);
+  
+  
   // Draw the skeleton connections
-  for (let i = 0; i < poses.length; i++) {
+  /*for (let i = 0; i < poses.length; i++) {
     let pose = poses[i];
     for (let j = 0; j < connections.length; j++) {
       let pointAIndex = connections[j][0];
@@ -42,7 +67,9 @@ function draw() {
         line(pointA.x, pointA.y, pointB.x, pointB.y);
       }
     }
-  }
+  }*/
+  
+  
   // Iterate through all the poses
   for (let i = 0; i < poses.length; i++) {
     let pose = poses[i];
