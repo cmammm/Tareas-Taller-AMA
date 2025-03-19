@@ -2,6 +2,7 @@ let bodyPose;
 let video;
 let poses = [];
 let connections;
+let painting;
 
 
 function preload() {
@@ -17,6 +18,9 @@ function mousePressed() {
 
 function setup() {
   createCanvas(640, 480);
+  // Creamos una capa para graficos
+  painting = createGraphics (640, 480);
+  painting.clear();
   // Create the video and hide it
   video = createCapture(VIDEO);
   video.size(640, 480);
@@ -38,18 +42,19 @@ function gotPoses(results) {
 
 
 function draw() {
-  fill (240, 128, 128);
-  rect (width/2, 0, width/2, height/2);
+  painting.noStroke();
+  painting.fill (240, 128, 128);
+  painting.rect (width/2, 0, width/2, height/2);
 
-  fill(128, 128, 0);
-  rect(0, 0, width/2, height/2);
+  painting.fill(128, 128, 0);
+  painting.rect(0, 0, width/2, height/2);
 
   //fill (0, 128, 128);
   //rect (0, 0, width, height);
 
 
-  // Display the video
-  //image(video, 0, 0, width, height);
+  //Display the video
+  image(video, 0, 0, width, height);
   
   
   // Draw the skeleton connections
@@ -84,4 +89,6 @@ function draw() {
       }
     }
   }
+  //Iqui colocamos nuestra capa para dibujar hecha con createGraphics
+  image(painting, 0, 0);
 }
