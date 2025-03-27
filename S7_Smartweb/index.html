@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camara inteligente</title>
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="style.css">2
+
+</head>
+<body>
+    <h1>Multiple object detection using pre trained model in TensorFlow.js</h1>
+    <!--Detección de multiples objetos usando un modelo entrenado en TensorFlow.js-->
+
+    <p>Wait for the model to load before clicking the button to enable the webcam - at which point it will become visible to use.</p>
+    <!--Espera a que el modelo carge antes de dar click en un boton para activar la camara para que se vuelva visible para su uso-->
+    
+    <section id="demos" class="invisible">
+
+      <p>Hold some objects up close to your webcam to get a real-time classification! When ready click "enable webcam" below and accept access to the webcam when the browser asks (check the top left of your window)</p>
+      <!--Acerca algunos objetos a tu cámara web para obtener una clasificación en tiempo real. Cuando estés listo, haz clic en "Habilitar cámara web" a continuación y acepta el acceso a la cámara web cuando el navegador te lo solicite (revisa la esquina superior izquierda de la ventana)-->
+      
+      <div id="liveView" class="camView">
+        <button id="webcamButton">Enable Webcam</button>
+        <video id="webcam" autoplay muted width="640" height="480"></video>
+      </div>
+    </section>
+
+    <!-- Import TensorFlow.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" type="text/javascript"></script>
+    <!-- Load the coco-ssd model to use to recognize things in images -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    
+    <!-- Import the page's JavaScript to do some stuff -->
+    <script src="script.js" defer></script>
+</body>
+</html>

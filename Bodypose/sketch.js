@@ -43,10 +43,10 @@ function gotPoses(results) {
 
 function draw() {
   painting.noStroke();
-  painting.fill (240, 128, 128);
+  painting.fill (240, 128, 128, 3);
   painting.rect (width/2, 0, width/2, height/2);
 
-  painting.fill(128, 128, 0);
+  painting.fill(128, 128, 0, 3);
   painting.rect(0, 0, width/2, height/2);
 
   //fill (0, 128, 128);
@@ -80,13 +80,24 @@ function draw() {
     let pose = poses[i];
     // Iterate through all the keypoints for each pose
     for (let j = 0; j < pose.keypoints.length; j++) {
-      let keypoint = pose.keypoints[j];
+      //let keypoint = pose.keypoints[j];
+      let index = pose.keypoints[10];
       // Only draw a circle if the keypoint's confidence is greater than 0.1
-      if (keypoint.confidence > 0.1) {
+      /*if (keypoint.confidence > 0.1) {
         fill(0, 255, 0);
         noStroke();
-        circle(keypoint.x, keypoint.y, 10);
-      }
+        circle(keypoint.x, keypoint.y, 10);*/
+        if (index.confidence > 0.1) {
+          fill(0, 255, 0);
+          noStroke();
+          circle(index.x, index.y, 10);
+  
+          // Si el punto está en la mitad derecha, dibujar un rectángulo
+          if (index.x > width / 2) {
+            fill(255, 0, 255);
+            rect(width/2, (height/2)-130, 130, 130);
+          }
+        }
     }
   }
   //Iqui colocamos nuestra capa para dibujar hecha con createGraphics
