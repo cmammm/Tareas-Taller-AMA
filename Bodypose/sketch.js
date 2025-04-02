@@ -7,7 +7,7 @@ let painting;
 
 function preload() {
   // Load the bodyPose model
-  bodyPose = ml5.bodyPose();
+  bodyPose = ml5.bodyPose({flipped:true});
 }
 
 
@@ -17,13 +17,14 @@ function mousePressed() {
 
 
 function setup() {
-  createCanvas(640, 480);
+  //lienzo de pantalla
+  createCanvas(windowWidth, windowHeight);
   // Creamos una capa para graficos
-  painting = createGraphics (640, 480);
+  painting = createGraphics (windowWidth, windowHeight);
   painting.clear();
-  // Create the video and hide it
-  video = createCapture(VIDEO);
-  video.size(640, 480);
+  // Crea el video y lo esconde
+  video = createCapture(VIDEO, {flipped:true});
+  video.size(windowWidth, windowHeight);
   video.hide();
   // Start detecting poses in the webcam video
   bodyPose.detectStart(video, gotPoses);
@@ -42,16 +43,34 @@ function gotPoses(results) {
 
 
 function draw() {
+  //estos son los cuadros que dividen la pantalla
   painting.noStroke();
-  painting.fill (240, 128, 128, 3);
+  //cuadro arriba izquierda
+  painting.fill (197, 219, 213, 3);
   painting.rect (width/2, 0, width/2, height/2);
+  //cuadro arriba derecha
+  painting.fill (219, 160, 178, 3);
+  painting.rect (0, 0, width/2, height/2);
+  //cuadro abajo izquierda
+  painting.fill (139, 163, 71, 3);
+  painting.rect (width/2, height/2, width/2, height/2);
+  //cuadro abajo derecha
+  painting.fill (220, 105, 70, 3);
+  painting.rect (0, height/2, width/2, height/2);
 
-  painting.fill(128, 128, 0, 3);
-  painting.rect(0, 0, width/2, height/2);
 
-  //fill (0, 128, 128);
-  //rect (0, 0, width, height);
-
+  //cuadro arriba izquierda
+  //painting.fill ('rgba(197, 219, 213, 0.4)');
+  //painting.rect (width/2, 0, width/2, height/2);
+  //cuadro arriba derecha
+  //painting.fill('rgba(219, 160, 178, 0.4)');
+  //painting.rect(0, 0, width/2, height/2);
+  //cuadro abajo izquierda
+  //painting.fill ('rgba(139, 163, 71, 0.4)');
+  //painting.rect (width/2, height/2, width/2, height/2);
+  //cuadro abajo derecha
+  //painting.fill('rgba(220, 105, 70, 0.4)');
+  //painting.rect(0, height/2, width/2, height/2);
 
   //Display the video
   image(video, 0, 0, width, height);
@@ -81,23 +100,40 @@ function draw() {
     // Iterate through all the keypoints for each pose
     for (let j = 0; j < pose.keypoints.length; j++) {
       //let keypoint = pose.keypoints[j];
-      let index = pose.keypoints[10];
+      let index1 = pose.keypoints[9];
+      let index2 = pose.keypoints[10];
       // Only draw a circle if the keypoint's confidence is greater than 0.1
       /*if (keypoint.confidence > 0.1) {
         fill(0, 255, 0);
         noStroke();
         circle(keypoint.x, keypoint.y, 10);*/
-        if (index.confidence > 0.1) {
-          fill(0, 255, 0);
+        //mano 1
+        if (index1.confidence > 0.1) {
+          fill(0, 0, 0);
           noStroke();
-          circle(index.x, index.y, 10);
-  
-          // Si el punto está en la mitad derecha, dibujar un rectángulo
-          if (index.x > width / 2) {
-            fill(255, 0, 255);
-            rect(width/2, (height/2)-130, 130, 130);
-          }
+          circle(index1.x, index1.y, 10);
         }
+
+        if (index1.x > 0 && index1.y < height/2) {
+          fill(255, 255, 0);
+          //rect(width/2, (height/2)-130, 130, 130);
+          textSize(100);
+          text('Izquierda', 0, (height/2)-130);
+        }
+
+        //mano 2
+          if (index2.confidence > 0.1) {
+          fill(0, 0, 0);
+          noStroke();
+          circle(index2.x, index2.y, 10);
+          }
+  
+        if (index2.x > width/2 && index2.y < height/2) {
+          fill(0, 255, 255);
+          //rect(0, (height/2)-130, 130, 130);
+          text('Derecha', width/2, (height/2)-130);
+        }
+
     }
   }
   //Iqui colocamos nuestra capa para dibujar hecha con createGraphics
