@@ -3,6 +3,7 @@ let video;
 let poses = [];
 let connections;
 let painting;
+let img;
 
 
 function preload() {
@@ -20,6 +21,8 @@ function setup() {
   //lienzo de pantalla
   createCanvas(windowWidth, windowHeight);
   // Creamos una capa para graficos
+  img = new Image();
+  img.src="assets/cat.png"
   painting = createGraphics (windowWidth, windowHeight);
   painting.clear();
   // Crea el video y lo esconde
@@ -46,17 +49,17 @@ function draw() {
   //estos son los cuadros que dividen la pantalla
   painting.noStroke();
   //cuadro arriba izquierda
-  painting.fill (197, 219, 213, 3);
-  painting.rect (width/2, 0, width/2, height/2);
+  //painting.fill (197, 219, 213, 3);
+  //painting.rect (width/2, 0, width/2, height/2);
   //cuadro arriba derecha
-  painting.fill (219, 160, 178, 3);
-  painting.rect (0, 0, width/2, height/2);
+  //painting.fill (219, 160, 178, 3);
+  //painting.rect (0, 0, width/2, height/2);
   //cuadro abajo izquierda
-  painting.fill (139, 163, 71, 3);
-  painting.rect (width/2, height/2, width/2, height/2);
+  //painting.fill (139, 163, 71, 3);
+  //painting.rect (width/2, height/2, width/2, height/2);
   //cuadro abajo derecha
-  painting.fill (220, 105, 70, 3);
-  painting.rect (0, height/2, width/2, height/2);
+  //painting.fill (220, 105, 70, 3);
+  //painting.rect (0, height/2, width/2, height/2);
 
 
   //cuadro arriba izquierda
@@ -118,7 +121,8 @@ function draw() {
           fill(255, 255, 0);
           //rect(width/2, (height/2)-130, 130, 130);
           textSize(100);
-          text('Izquierda', 0, (height/2)-130);
+          //text('Izquierda', 0, (height/2)-130);
+          drawingContext.drawImage(img, 400, 80);
         }
 
         //mano 2
@@ -131,7 +135,9 @@ function draw() {
         if (index2.x > width/2 && index2.y < height/2) {
           fill(0, 255, 255);
           //rect(0, (height/2)-130, 130, 130);
-          text('Derecha', width/2, (height/2)-130);
+          //text('Derecha', width/2, (height/2)-130);
+          textSize(60);
+          text('miawww', index2.x, index2.y);
         }
 
     }
