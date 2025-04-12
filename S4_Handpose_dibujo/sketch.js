@@ -1,49 +1,54 @@
-let handPose;
 let video;
+let handPose;
 let hands = [];
 let painting;
-
-function preload() {
-  handPose = ml5.handPose({flipped: true});
-}
-
-function mousePressed(){
-  handPose = ml5.handPose
-}
-
-function mousePressed(){
-  console.log(hands)
-}
+let pintar;
+let dedo;
 
 function setup() {
   createCanvas(640, 480);
-  painting = createGraphics(640,480);
+  painting = createGraphics(640, 480);
   painting.clear();
-    // Create the video and hide it
-  video = createCapture(VIDEO, {flipped: true});
+
+  pintar = createGraphics(640, 480);
+
+  video = createCapture(VIDEO);
   video.size(640, 480);
   video.hide();
-    // Start detecting hands from the webcam video
-  handPose.detectStart(video, gotHands);
+
+  // Iniciar el modelo handpose correctamente
+  handPose = ml5.handpose(video, { flipHorizontal: true }, () => {
+    console.log("Modelo cargado 💅");
+  });
+
+  // Conectar con la función de resultados
+  handPose.on("predict", gotHands); // Usamos 'predict' para recibir las manos
 }
-// Callback function for when handPose outputs data
+
 function gotHands(results) {
-  // Save the output to the hands variable
   hands = results;
 }
 
 function draw() {
-  image(video, 0, 0, width, height);
-  // Draw all the tracked hand points
+  image(video, 0, 0); // Mostrar el video
+
+  // Detectar y dibujar las manos
   for (let i = 0; i < hands.length; i++) {
     let hand = hands[i];
-    for (let j = 0; j < hand.keypoints.length; j++) {
-      //let keypoint = hand.keypoints[j];
-      let index  = hand.keypoint[8]
-      fill(255, 192, 203);
-      noStroke();
-      //circle(keypoint.x, keypoint.y, 10);
-      rect(index.x, index.y,30,30)
+
+    for (let j = 0; j < hand.landmarks.length; j++) {
+      dedo = hand.landmarks[8]; // Usamos el punto del índice (dedo)
+
+      // Invertir la posición X para corregir el reflejo del dibujo
+      let x = width - dedo[0];  // Invertir la coordenada X
+      let y = dedo[1];
+
+      pintar.fill(255, 90, 12);   // Color del dibujo (naranja)
+      pintar.noStroke();          // Sin borde
+      pintar.circle(x, y, 40);    // Dibujar el círculo en la posición correcta
     }
   }
+
+  // Mostrar la capa 'pintar' encima del video
+  image(pintar, 0, 0);
 }
