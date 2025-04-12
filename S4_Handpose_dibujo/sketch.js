@@ -16,13 +16,12 @@ function setup() {
   video.size(640, 480);
   video.hide();
 
-  // Iniciar el modelo handpose correctamente
+  // Iniciar handpose
   handPose = ml5.handpose(video, { flipHorizontal: true }, () => {
-    console.log("Modelo cargado 💅");
+    console.log("Modelo cargado");
   });
 
-  // Conectar con la función de resultados
-  handPose.on("predict", gotHands); // Usamos 'predict' para recibir las manos
+  handPose.on("predict", gotHands);
 }
 
 function gotHands(results) {
@@ -37,18 +36,17 @@ function draw() {
     let hand = hands[i];
 
     for (let j = 0; j < hand.landmarks.length; j++) {
-      dedo = hand.landmarks[8]; // Usamos el punto del índice (dedo)
+      dedo = hand.landmarks[8]; 
 
-      // Invertir la posición X para corregir el reflejo del dibujo
-      let x = width - dedo[0];  // Invertir la coordenada X
+      let x = width - dedo[0];  
       let y = dedo[1];
 
-      pintar.fill(255, 90, 12);   // Color del dibujo (naranja)
-      pintar.noStroke();          // Sin borde
-      pintar.circle(x, y, 40);    // Dibujar el círculo en la posición correcta
+      pintar.fill(255, 90, 12);
+      pintar.noStroke();          
+      pintar.circle(x, y, 40);
     }
   }
 
-  // Mostrar la capa 'pintar' encima del video
+
   image(pintar, 0, 0);
 }
