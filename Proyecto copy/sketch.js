@@ -3,7 +3,7 @@ let video;
 let label;
 
 function preload() {
-  classifier = ml5.imageClassifier("https://teachablemachine.withgoogle.com/models/AaXHyqknO/");
+  classifier = ml5.imageClassifier("Mobilnet");
 }
 
 function gotResults(results) {
@@ -15,7 +15,7 @@ function setup() {
   createCanvas(640, 480);
   video = createCapture(VIDEO);
   video.hide();
-  classifier.classifyStart(video, gotResults);
+  classifier.classify(video, gotResults);
 }
 
 function draw() {
