@@ -2,7 +2,6 @@ let video, bodyPose, poses = [];
 let armadura, espada, corona, vestido, sombrero, hechizo, alas, fuego;
 
 function preload() {
-  // Cargar todas las imágenes necesarias
   armadura = loadImage("assets/armadura.png");
   espada = loadImage("assets/espada.png");
   corona = loadImage("assets/corona.png");
@@ -12,7 +11,6 @@ function preload() {
   alas = loadImage("assets/alas.png");
   fuego = loadImage("assets/fuego.png");
 
-  // Cargar modelo
   bodyPose = ml5.bodyPose({ flipped: true });
 }
 
@@ -22,7 +20,6 @@ function setup() {
   video.size(width, height);
   video.hide();
 
-  // Iniciar detección
   bodyPose.detectStart(video, gotPoses);
 }
 
